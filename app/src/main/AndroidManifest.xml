@@ -16,9 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Prefs">
-
-        </activity>
+        <activity android:name=".Prefs"></activity>
+        <activity android:name=".MainData"></activity>
     </application>
 
 </manifest>
