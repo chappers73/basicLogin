@@ -7,69 +7,75 @@ import android.preference.ListPreference;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.prefs.Preferences;
 
 public class Prefs extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private SharedPreferences sharedPreferences;
-
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefs);
+        PreferenceManager.setDefaultValues(Prefs.this, R.xml.prefs,
+                false);
+        initSummary(getPreferenceScreen());
     }
 
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
-
-        sharedPreferences = getPreferenceManager().getSharedPreferences();
-        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-
-        PreferenceScreen preferenceScreen = getPreferenceScreen();
-        for(int i = 0; i < preferenceScreen.getPreferenceCount(); i++) {
-            setSummary(getPreferenceScreen().getPreference(i));
-        }
+        // Set up a listener whenever a key changes
+        getPreferenceScreen().getSharedPreferences()
+                .registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
-    public void onPause() {
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+    protected void onPause() {
         super.onPause();
+        // Unregister the listener whenever a key changes
+        getPreferenceScreen().getSharedPreferences()
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        Preference pref = getPreferenceScreen().findPreference(key);
-        setSummary(pref);
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+                                          String key) {
+        updatePrefSummary(findPreference(key));
     }
 
-    private void setSummary(Preference pref) {
-        if (pref instanceof EditTextPreference) {
-            updateSummary((EditTextPreference) pref);
-        } else if (pref instanceof ListPreference) {
-            updateSummary((ListPreference) pref);
-        } else if (pref instanceof MultiSelectListPreference) {
-            updateSummary((MultiSelectListPreference) pref);
+    private void initSummary(Preference p) {
+        if (p instanceof PreferenceGroup) {
+            PreferenceGroup pGrp = (PreferenceGroup) p;
+            for (int i = 0; i < pGrp.getPreferenceCount(); i++) {
+                initSummary(pGrp.getPreference(i));
+            }
+        } else {
+            updatePrefSummary(p);
         }
     }
 
-    private void updateSummary(MultiSelectListPreference pref) {
-        pref.setSummary(Arrays.toString(pref.getValues().toArray()));
+    private void updatePrefSummary(Preference p) {
+        if (p instanceof ListPreference) {
+            ListPreference listPref = (ListPreference) p;
+            p.setSummary(listPref.getEntry());
+        }
+        if (p instanceof EditTextPreference) {
+            EditTextPreference editTextPref = (EditTextPreference) p;
+            if (p.getTitle().toString().toLowerCase().contains("password"))
+            {
+                p.setSummary("******");
+            } else {
+                p.setSummary(editTextPref.getText());
+            }
+        }
+        if (p instanceof MultiSelectListPreference) {
+            EditTextPreference editTextPref = (EditTextPreference) p;
+            p.setSummary(editTextPref.getText());
+        }
     }
-
-    private void updateSummary(ListPreference pref) {
-        pref.setSummary(pref.getValue());
-    }
-
-    private void updateSummary(EditTextPreference preference) {
-        preference.setSummary(preference.getText());
-    }
-
 }

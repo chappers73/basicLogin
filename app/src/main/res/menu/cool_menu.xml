@@ -8,7 +8,7 @@
         android:alphabeticShortcut="a"/>
 
     <item
-        android:title="Pref"
+        android:title="Preferences"
         android:id="@+id/preferences"/>
 
 

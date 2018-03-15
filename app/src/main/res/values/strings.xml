@@ -2,4 +2,5 @@
     <string name="app_name">Simple Login Test</string>
     <string name="nice_background">nice background</string>
     <string name="btnlogin">Login</string>
+    <string name="Prefs_Title_UserInfo">User Info</string>
 </resources>

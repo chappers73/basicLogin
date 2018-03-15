@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory android:title="@string/Prefs_Title_UserInfo">
 
-    <EditTextPreference
-        android:key="edit_text_preference_username"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Enter your name"
-        android:title="What is your name?" />
+        <EditTextPreference
+            android:key="edit_text_preference_username"
+            android:defaultValue="Who Am I"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="Enter your username"
+            android:title="Username" />
 
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="check_box_preference_remember"
-        android:summary="Do you want to remember username?"
-        android:title="Remember Username etc" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="check_box_preference_remember"
+            android:summary="Do you want to remember username?"
+            android:title="Remember Username etc" />
 
-    <ListPreference
+    </PreferenceCategory>
+
+ <!--   <ListPreference
         android:entries="@array/list"
         android:entryValues="@array/lValues"
         android:key="list"
         android:summary="A list to choose from"
-        android:title="list"></ListPreference>
+        android:title="list"></ListPreference>-->
+
+
 </PreferenceScreen>
