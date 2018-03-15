@@ -30,13 +30,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
     private EditText                    etUsername;
     private EditText                    etPassword;
     private EditText                    etTitle;
-    private Switch                      swRememberme;
     private Button                      btnLogin;
     private ImageView                   img_menu;
     private ProgressDialog              dialog;
     private static final String         TAG = "Login";
     private SharedPreferences           prefs;
     private SharedPreferences           getPrefs;
+    private boolean                     rememberme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
         setContentView(R.layout.activity_login);
 
         initSystem();
-        swRememberme.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         img_menu.setOnClickListener(this);
 
@@ -67,7 +66,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
         etPassword =            findViewById(R.id.etPassword);
         etTitle =               findViewById(R.id.etTitle);
         btnLogin =              findViewById(R.id.btnLogin);
-        swRememberme =          findViewById(R.id.swRememberme);
         img_menu =              findViewById(R.id.img_prefs);
 
         // Set the progress Dialog up
@@ -79,14 +77,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
         etTitle.setEnabled(false);
 
         getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean rememberme = getPrefs.getBoolean("prefs_cb_rememberMe", false);
+        rememberme = getPrefs.getBoolean("prefs_cb_rememberMe", false);
 
         // If the Remember me dialog is true load the saved values
         //if (prefs.getBoolean("rememberme", true)) {
         if (rememberme) {
             etUsername.setText(getPrefs.getString("prefs_et_UserInfo_Username", "Username"));
             //etPassword.setText(prefs.getString("password", ""));
-            swRememberme.setChecked(getPrefs.getBoolean("rememberme", true));
         }
         // else put the cursor focus in the username editText box
         else {
@@ -142,29 +139,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.swRememberme:
-                if (swRememberme.isChecked()){
-                    Toast.makeText(Login.this,"Username and Password to be saved",Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Toast.makeText(Login.this,"Username and Password NOT to be saved",Toast.LENGTH_LONG).show();
-                }
-
-                break;
-
             case R.id.btnLogin:
-                /* hide keyboard */
                 dialog.show();
                 SharedPreferences.Editor editor = getPrefs.edit();
-                if (swRememberme.isChecked()) {
+                if (getPrefs.getBoolean("prefs_cb_rememberMe", false)) {
                     editor.putString("prefs_et_UserInfo_Username", etUsername.getText().toString());
-                    //editor.putString("password", etPassword.getText().toString());
-                    editor.putBoolean("rememberme", true);
                     editor.apply();
-                }else {
-                    editor.putBoolean("rememberme", false);
-                    editor.apply();
-
                 }
                 InputMethodManager imm = (InputMethodManager) Login.this.getSystemService(Context.INPUT_METHOD_SERVICE);
 

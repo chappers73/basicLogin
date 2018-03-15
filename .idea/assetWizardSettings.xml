@@ -33,9 +33,11 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_menu" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="C:\Users\chris\Dropbox\Programming\Android\AndroidStudioProjects\images\failedgoals.jpg" />
+                                      <entry key="outputName" value="ic_sad" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="e5dece" />
+                                      <entry key="themeColor" value="e5e2c4" />
                                     </map>
                                   </option>
                                 </PersistentState>
