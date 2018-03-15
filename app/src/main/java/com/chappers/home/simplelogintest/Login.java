@@ -119,8 +119,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
 
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.aboutUs:
-                return true;
             case R.id.preferences:
                 Log.i(TAG, "onOptionsItemSelected: Pref selected");
                 Intent i = new Intent(this,Prefs.class);

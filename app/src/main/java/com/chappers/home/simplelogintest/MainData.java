@@ -41,10 +41,7 @@ public class MainData extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case R.id.aboutUs:
 
-
-                break;
             case R.id.preferences:
                 Intent i = new Intent(this,Prefs.class);
                 startActivity(i);
