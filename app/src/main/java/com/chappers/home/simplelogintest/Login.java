@@ -2,10 +2,14 @@ package com.chappers.home.simplelogintest;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -33,22 +37,18 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
 
         // Hide the title bar
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        //        WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Objects.requireNonNull(getSupportActionBar()).hide();
+        //Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_login);
 
         initSystem();
-
         swRememberme.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
-
-
     }
 
-    //region Init system
     private void initSystem(){
         // get the shared pref's
         prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
@@ -79,11 +79,32 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
             etUsername.requestFocus();
             etUsername.setActivated(true);
         }
-
-
     }
 
-    //endregion
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        Log.i(TAG, "onCreateOptionsMenu: DID we get here?");
+        MenuInflater blowUp = getMenuInflater();
+        blowUp.inflate(R.menu.cool_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+        //return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.aboutUs:
+
+
+                break;
+            case R.id.preferences:
+                Intent i = new Intent(this,Prefs.class);
+                startActivity(i);
+
+                break;
+        }
+        return false;
+    }
 
     //region private void openKeyboard()
     private void openKeyboard() {
