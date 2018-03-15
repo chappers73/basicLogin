@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import java.util.Objects;
 
-public class Login extends AppCompatActivity {
+public class Login extends AppCompatActivity implements View.OnClickListener{
 
     private EditText                    etUsername;
     private EditText                    etPassword;
@@ -26,6 +26,7 @@ public class Login extends AppCompatActivity {
     private Button                      btnLogin;
     private ProgressDialog              dialog;
     private static final String         TAG = "Login";
+    private SharedPreferences           prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +40,18 @@ public class Login extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_login);
 
+        initSystem();
+
+        swRememberme.setOnClickListener(this);
+        btnLogin.setOnClickListener(this);
+
+
+    }
+
+    //region Init system
+    private void initSystem(){
         // get the shared pref's
-        final SharedPreferences prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
+        prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
 
         // find the items
         etUsername =            findViewById(R.id.etUsername);
@@ -70,50 +81,9 @@ public class Login extends AppCompatActivity {
         }
 
 
-        //region Remember me button onClick Listener
-
-        swRememberme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (swRememberme.isChecked()){
-                    Toast.makeText(Login.this,"Username and Password to be saved",Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Toast.makeText(Login.this,"Username and Password NOT to be saved",Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        //endregion
-
-        //region Login Button setOnClickListener
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /* hide keyboard */
-                dialog.show();
-                SharedPreferences.Editor editor = prefs.edit();
-                if (swRememberme.isChecked()) {
-                    editor.putString("username", etUsername.getText().toString());
-                    editor.putString("password", etPassword.getText().toString());
-                    editor.putBoolean("rememberme", true);
-                    editor.apply();
-                 }else {
-                    editor.putBoolean("rememberme", false);
-                    editor.apply();
-
-                }
-
-                InputMethodManager imm = (InputMethodManager) Login.this.getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                assert imm != null;
-                if (imm.isAcceptingText()) {
-                    closeKeyboard();
-                }
-            }
-        });
-        //endregion
-
     }
+
+    //endregion
 
     //region private void openKeyboard()
     private void openKeyboard() {
@@ -131,4 +101,45 @@ public class Login extends AppCompatActivity {
 
     }
     //endregion
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.swRememberme:
+                if (swRememberme.isChecked()){
+                    Toast.makeText(Login.this,"Username and Password to be saved",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(Login.this,"Username and Password NOT to be saved",Toast.LENGTH_LONG).show();
+                }
+
+                break;
+
+            case R.id.btnLogin:
+                /* hide keyboard */
+                dialog.show();
+                SharedPreferences.Editor editor = prefs.edit();
+                if (swRememberme.isChecked()) {
+                    editor.putString("username", etUsername.getText().toString());
+                    editor.putString("password", etPassword.getText().toString());
+                    editor.putBoolean("rememberme", true);
+                    editor.apply();
+                }else {
+                    editor.putBoolean("rememberme", false);
+                    editor.apply();
+
+                }
+
+                InputMethodManager imm = (InputMethodManager) Login.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                assert imm != null;
+                if (imm.isAcceptingText()) {
+                    closeKeyboard();
+                }
+
+                break;
+        }
+
+    }
+
 }
