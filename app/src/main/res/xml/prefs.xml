@@ -4,7 +4,7 @@
     <PreferenceCategory android:title="@string/Prefs_Title_UserInfo">
 
         <EditTextPreference
-            android:key="edit_text_preference_username"
+            android:key="prefs_et_UserInfo_Username"
             android:defaultValue="Who Am I"
             android:selectAllOnFocus="true"
             android:singleLine="true"
@@ -13,7 +13,7 @@
 
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="check_box_preference_remember"
+            android:key="prefs_cb_rememberMe"
             android:summary="Do you want to remember username?"
             android:title="Remember Username etc" />
 
@@ -25,6 +25,18 @@
         android:key="list"
         android:summary="A list to choose from"
         android:title="list"></ListPreference>-->
+
+    <PreferenceCategory android:title="@string/Prefs_Title_ServerSettings">
+
+        <EditTextPreference
+            android:key="prefs_et_Server_URL"
+            android:defaultValue="Server Address"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="What is the server address"
+            android:title="Server Address" />
+
+    </PreferenceCategory>
 
 
 </PreferenceScreen>

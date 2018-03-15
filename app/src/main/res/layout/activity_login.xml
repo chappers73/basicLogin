@@ -52,15 +52,15 @@
         android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
         android:textAlignment="center"
-        android:textSize="24dp"
+        android:textSize="22dp"
         app:layout_constraintBottom_toTopOf="@+id/etPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.858" />
+        app:layout_constraintVertical_bias="0.929" />
 
     <!-- Password -->
     <EditText
@@ -72,11 +72,11 @@
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
         android:textAlignment="center"
         android:textColorLink="?attr/colorBackgroundFloating"
-        android:textSize="24dp"
+        android:textSize="22dp"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -130,14 +130,21 @@
         app:layout_constraintTop_toTopOf="@+id/imageView"
         app:layout_constraintVertical_bias="0.527" />
 
+    <!-- Menu Button -->
     <ImageView
         android:id="@+id/img_prefs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="Menu"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
+        app:layout_constraintVertical_bias="0.987"
         app:srcCompat="@drawable/ic_menu" />
 
 </android.support.constraint.ConstraintLayout>

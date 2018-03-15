@@ -1,5 +1,6 @@
 package com.chappers.home.simplelogintest;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +36,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
     private ProgressDialog              dialog;
     private static final String         TAG = "Login";
     private SharedPreferences           prefs;
+    private SharedPreferences           getPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,15 +78,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
 
         etTitle.setEnabled(false);
 
-        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean rememberme = getPrefs.getBoolean("check_box_preference_remember", false);
+        getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        boolean rememberme = getPrefs.getBoolean("prefs_cb_rememberMe", false);
 
         // If the Remember me dialog is true load the saved values
         //if (prefs.getBoolean("rememberme", true)) {
         if (rememberme) {
-            etUsername.setText(prefs.getString("username", "Username"));
-            etPassword.setText(prefs.getString("password", ""));
-            swRememberme.setChecked(prefs.getBoolean("rememberme", true));
+            etUsername.setText(getPrefs.getString("prefs_et_UserInfo_Username", "Username"));
+            //etPassword.setText(prefs.getString("password", ""));
+            swRememberme.setChecked(getPrefs.getBoolean("rememberme", true));
         }
         // else put the cursor focus in the username editText box
         else {
@@ -141,6 +143,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
                 Intent i = new Intent(this,Prefs.class);
                 startActivity(i);
                 return true;
+            case R.id.exit:
+                Log.i(TAG, "onOptionsItemSelected: exit called");
+                ((Activity)this).finish();
+                System.exit(0);
+                return true;
             default:
                 return false;
         }
@@ -162,10 +169,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
             case R.id.btnLogin:
                 /* hide keyboard */
                 dialog.show();
-                SharedPreferences.Editor editor = prefs.edit();
+                SharedPreferences.Editor editor = getPrefs.edit();
                 if (swRememberme.isChecked()) {
-                    editor.putString("username", etUsername.getText().toString());
-                    editor.putString("password", etPassword.getText().toString());
+                    editor.putString("prefs_et_UserInfo_Username", etUsername.getText().toString());
+                    //editor.putString("password", etPassword.getText().toString());
                     editor.putBoolean("rememberme", true);
                     editor.apply();
                 }else {

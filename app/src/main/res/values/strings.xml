@@ -3,4 +3,6 @@
     <string name="nice_background">nice background</string>
     <string name="btnlogin">Login</string>
     <string name="Prefs_Title_UserInfo">User Info</string>
+    <string name="Prefs_Title_ServerSettings">Server Settings</string>
+    <string name="LoginScreen_Title_house_control">House Control</string>
 </resources>
