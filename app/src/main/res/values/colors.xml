@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="Slider_Switched_Green">#c8ec75</color>
+    <color name="Slider_Switch_Aqua">#aaf0cf</color>
+    <color name="Username_Background_Grey">#c1bcb7</color>
+    <color name="Nearly_white">#6fffffff</color><!-- white -->
+
+</resources>
