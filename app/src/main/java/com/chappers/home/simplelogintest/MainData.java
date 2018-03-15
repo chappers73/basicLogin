@@ -6,25 +6,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import java.util.Objects;
 
-public class MainData extends AppCompatActivity {
+public class MainData extends AppCompatActivity{
 
     private static final String TAG = "MainData";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_data);
 
         // Hide the title bar
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-        //        WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_main_data);
         Objects.requireNonNull(getSupportActionBar()).hide();
     }
 
@@ -50,4 +50,5 @@ public class MainData extends AppCompatActivity {
         }
         return false;
     }
+
 }

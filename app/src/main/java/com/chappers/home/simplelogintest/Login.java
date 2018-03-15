@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -93,6 +94,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
         }
     }
 
+    //region onCreateOptionsMenu(android.view.Menu menu)
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         MenuInflater blowUp = getMenuInflater();
@@ -100,6 +102,25 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
         return super.onCreateOptionsMenu(menu);
         //return true;
     }
+    //endregion
+    //region onMenuItemClick(MenuItem item)
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.preferences:
+                Log.i(TAG, "onOptionsItemSelected: Pref selected");
+                Intent i = new Intent(this,Prefs.class);
+                startActivity(i);
+                return true;
+            case R.id.exit:
+                Log.i(TAG, "onOptionsItemSelected: exit called");
+                ((Activity)this).finish();
+                System.exit(0);
+                return true;
+            default:
+                return false;
+        }
+    }
+    //endregion
 
     //region private void openKeyboard()
     private void openKeyboard() {
@@ -118,27 +139,19 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
     }
     //endregion
 
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.preferences:
-                Log.i(TAG, "onOptionsItemSelected: Pref selected");
-                Intent i = new Intent(this,Prefs.class);
-                startActivity(i);
-                return true;
-            case R.id.exit:
-                Log.i(TAG, "onOptionsItemSelected: exit called");
-                ((Activity)this).finish();
-                System.exit(0);
-                return true;
-            default:
-                return false;
-        }
-    }
-
     @Override
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.btnLogin:
+
+                if(TextUtils.isEmpty(etUsername.getText())) {
+                    etUsername.setError("You must enter a username");
+                    return;
+                }
+                if(TextUtils.isEmpty(etPassword.getText())) {
+                    etPassword.setError("You must enter a password");
+                    return;
+                }
                 dialog.show();
                 SharedPreferences.Editor editor = getPrefs.edit();
                 if (getPrefs.getBoolean("prefs_cb_rememberMe", false)) {
@@ -158,11 +171,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
                         dialog.dismiss();
                         Intent i = new Intent(Login.this, MainData.class);
                         startActivity(i);
-
                     }
                 }, 5000);   //5 seconds
-
-
                 break;
 
             case R.id.img_prefs:
@@ -171,7 +181,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.cool_menu, popup.getMenu());
                 popup.show();
-
                 break;
 
         }
