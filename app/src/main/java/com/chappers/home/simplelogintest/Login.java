@@ -103,20 +103,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
         //return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.aboutUs:
-                break;
-            case R.id.preferences:
-                Log.i(TAG, "onOptionsItemSelected: Pref selected");
-                Intent i = new Intent(this,Prefs.class);
-                startActivity(i);
-                break;
-        }
-        return false;
-    }
-
     //region private void openKeyboard()
     private void openKeyboard() {
         InputMethodManager imm = (InputMethodManager) Login.this.getSystemService(Context.INPUT_METHOD_SERVICE);
