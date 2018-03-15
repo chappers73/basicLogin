@@ -21,9 +21,9 @@ public class MainData extends AppCompatActivity {
         setContentView(R.layout.activity_main_data);
 
         // Hide the title bar
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        //        WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Objects.requireNonNull(getSupportActionBar()).hide();
     }

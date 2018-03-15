@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -72,7 +73,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
         dialog =                new ProgressDialog(this);
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
-        dialog.setMessage("Logging in, hang fire!");
+        dialog.setMessage("Checking Credentials....");
 
         etTitle.setEnabled(false);
 
@@ -150,6 +151,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
                 if (imm.isAcceptingText()) {
                     closeKeyboard();
                 }
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        // yourMethod();
+                        dialog.dismiss();
+                        Intent i = new Intent(Login.this, MainData.class);
+                        startActivity(i);
+
+                    }
+                }, 5000);   //5 seconds
+
 
                 break;
 
