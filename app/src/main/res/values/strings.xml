@@ -5,4 +5,32 @@
     <string name="Prefs_Title_UserInfo">User Info</string>
     <string name="Prefs_Title_ServerSettings">Server Settings</string>
     <string name="LoginScreen_Title_house_control">House Control</string>
+    <string name="Prefs_Title_Camera_Title">Camera Settings</string>
+    <string name="prefs_et_Camera1_URL">prefs_et_Camera1_URL</string>
+    <string name="prefs_et_Camera_Username">prefs_et_Camera_Username</string>
+    <string name="prefs_et_Camera_Password">prefs_et_Camera_Password</string>
+
+    <string name="prefs_et_Camera_1_Username">prefs_et_Camera_1_Username</string>
+    <string name="prefs_et_Camera_1_Password">prefs_et_Camera_1_Password</string>
+    <string name="prefs_et_Camera_1_URL">prefs_et_Camera_1_URL</string>
+    <string name="prefs_et_Camera_1_Name">prefs_et_Camera_1_Name</string>
+    <string name="prefs_chk_Camera1_Enabled">prefs_chk_Camera1_Enabled</string>
+
+    <string name="prefs_et_Camera_2_Username">prefs_et_Camera_2_Username</string>
+    <string name="prefs_et_Camera_2_Password">prefs_et_Camera_2_Password</string>
+    <string name="prefs_et_Camera_2_URL">prefs_et_Camera_2_URL</string>
+    <string name="prefs_et_Camera_2_Name">prefs_et_Camera_2_Name</string>
+    <string name="prefs_chk_Camera2_Enabled">prefs_chk_Camera2_Enabled</string>
+
+    <string name="prefs_et_Camera_3_Username">prefs_et_Camera_3_Username</string>
+    <string name="prefs_et_Camera_3_Password">prefs_et_Camera_3_Password</string>
+    <string name="prefs_et_Camera_3_URL">prefs_et_Camera_3_URL</string>
+    <string name="prefs_et_Camera_3_Name">prefs_et_Camera_3_Name</string>
+    <string name="prefs_chk_Camera3_Enabled">prefs_chk_Camera3_Enabled</string>
+
+    <string name="prefs_et_Camera_4_Username">prefs_et_Camera_4_Username</string>
+    <string name="prefs_et_Camera_4_Password">prefs_et_Camera_4_Password</string>
+    <string name="prefs_et_Camera_4_URL">prefs_et_Camera_4_URL</string>
+    <string name="prefs_et_Camera_4_Name">prefs_et_Camera_4_Name</string>
+    <string name="prefs_chk_Camera4_Enabled">prefs_chk_Camera4_Enabled</string>
 </resources>

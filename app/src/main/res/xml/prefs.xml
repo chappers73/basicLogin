@@ -4,8 +4,8 @@
     <PreferenceCategory android:title="@string/Prefs_Title_UserInfo">
 
         <EditTextPreference
-            android:key="prefs_et_UserInfo_Username"
             android:defaultValue="Who Am I"
+            android:key="prefs_et_UserInfo_Username"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="Enter your username"
@@ -19,24 +19,234 @@
 
     </PreferenceCategory>
 
- <!--   <ListPreference
-        android:entries="@array/list"
-        android:entryValues="@array/lValues"
-        android:key="list"
-        android:summary="A list to choose from"
-        android:title="list"></ListPreference>-->
+    <!--   <ListPreference
+           android:entries="@array/list"
+           android:entryValues="@array/lValues"
+           android:key="list"
+           android:summary="A list to choose from"
+           android:title="list"></ListPreference>-->
 
     <PreferenceCategory android:title="@string/Prefs_Title_ServerSettings">
 
         <EditTextPreference
-            android:key="prefs_et_Server_URL"
             android:defaultValue="Server Address"
+            android:key="prefs_et_Server_URL"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="What is the server address"
             android:title="Server Address" />
 
     </PreferenceCategory>
+
+
+    <!-- This PreferenceScreen tag serves as a screen break (similar to page break
+         in word processing). Like for other preference types, we assign a key
+         here so it is able to save and restore its instance state. -->
+    <PreferenceScreen
+        android:key="screen_preference"
+        android:summary="Remote camera configurations"
+        android:title="Camera Settings">
+
+
+        <!-- Camera 1 New Preference Page -->
+        <PreferenceScreen
+            android:key="screen_preference"
+            android:summary="Remote camera configuration"
+            android:title="Camera 1">
+            <PreferenceCategory android:title="@string/Prefs_Title_Camera_Title">
+
+                <EditTextPreference
+                    android:defaultValue="Where am I"
+                    android:key="@string/prefs_et_Camera_1_Name"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera Name"
+                    android:title="Firendly Name of the Camera i.e. Front Door" />
+
+                <EditTextPreference
+                    android:defaultValue="username"
+                    android:key="@string/prefs_et_Camera_1_Username"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera Username"
+                    android:title="Camera Username" />
+
+                <EditTextPreference
+                    android:defaultValue="password"
+                    android:inputType="textPassword"
+                    android:key="@string/prefs_et_Camera_1_Password"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera Password"
+                    android:title="Camera Password" />
+
+                <EditTextPreference
+                    android:defaultValue="Server Address"
+                    android:key="@string/prefs_et_Camera_1_URL"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera IP Address and port"
+                    android:title="Camera IP address and port" />
+
+                <CheckBoxPreference
+                    android:key="@string/prefs_chk_Camera1_Enabled"
+                    android:summary="Is the Camera Enabled"
+                    android:title="Enable Camera" />
+            </PreferenceCategory>
+        </PreferenceScreen>
+
+        <!-- Camera 2 New Preference Page -->
+        <PreferenceScreen
+            android:key="screen_preference"
+            android:summary="Remote camera configuration"
+            android:title="Camera 2">
+            <PreferenceCategory android:title="@string/Prefs_Title_Camera_Title">
+
+                <EditTextPreference
+                    android:defaultValue="Where am I"
+                    android:key="@string/prefs_et_Camera_2_Name"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera Name"
+                    android:title="Firendly Name of the Camera i.e. Front Door" />
+
+                <EditTextPreference
+                    android:defaultValue="username"
+                    android:key="@string/prefs_et_Camera_2_Username"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera Username"
+                    android:title="Camera Username" />
+
+                <EditTextPreference
+                    android:defaultValue="password"
+                    android:inputType="textPassword"
+                    android:key="@string/prefs_et_Camera_2_Password"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera Password"
+                    android:title="Camera Password" />
+
+                <EditTextPreference
+                    android:defaultValue="Server Address"
+                    android:key="@string/prefs_et_Camera_2_URL"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera IP Address and port"
+                    android:title="Camera IP address and port" />
+
+                <CheckBoxPreference
+                    android:key="@string/prefs_chk_Camera2_Enabled"
+                    android:summary="Is the Camera Enabled"
+                    android:title="Enable Camera" />
+            </PreferenceCategory>
+        </PreferenceScreen>
+
+        <!-- Camera 3 New Preference Page -->
+        <PreferenceScreen
+            android:key="screen_preference"
+            android:summary="Remote camera configuration"
+            android:title="Camera 3">
+            <PreferenceCategory android:title="@string/Prefs_Title_Camera_Title">
+
+                <EditTextPreference
+                    android:defaultValue="Where am I"
+                    android:key="@string/prefs_et_Camera_3_Name"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera Name"
+                    android:title="Firendly Name of the Camera i.e. Front Door" />
+
+                <EditTextPreference
+                    android:defaultValue="username"
+                    android:key="@string/prefs_et_Camera_3_Username"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera Username"
+                    android:title="Camera Username" />
+
+                <EditTextPreference
+                    android:defaultValue="password"
+                    android:inputType="textPassword"
+                    android:key="@string/prefs_et_Camera_3_Password"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera Password"
+                    android:title="Camera Password" />
+
+                <EditTextPreference
+                    android:defaultValue="Server Address"
+                    android:key="@string/prefs_et_Camera_3_URL"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera IP Address and port"
+                    android:title="Camera IP address and port" />
+
+                <CheckBoxPreference
+                    android:key="@string/prefs_chk_Camera3_Enabled"
+                    android:summary="Is the Camera Enabled"
+                    android:title="Enable Camera" />
+            </PreferenceCategory>
+        </PreferenceScreen>
+
+        <!-- Camera 4 New Preference Page -->
+        <PreferenceScreen
+            android:key="screen_preference"
+            android:summary="Remote camera configuration"
+            android:title="Camera 4">
+            <PreferenceCategory android:title="@string/Prefs_Title_Camera_Title">
+
+                <EditTextPreference
+                    android:defaultValue="Where am I"
+                    android:key="@string/prefs_et_Camera_4_Name"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera Name"
+                    android:title="Firendly Name of the Camera i.e. Front Door" />
+
+                <EditTextPreference
+                    android:defaultValue="username"
+                    android:key="@string/prefs_et_Camera_4_Username"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera Username"
+                    android:title="Camera Username" />
+
+                <EditTextPreference
+                    android:defaultValue="password"
+                    android:inputType="textPassword"
+                    android:key="@string/prefs_et_Camera_4_Password"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera Password"
+                    android:title="Camera Password" />
+
+                <EditTextPreference
+                    android:defaultValue="Server Address"
+                    android:key="@string/prefs_et_Camera_4_URL"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="Camera IP Address and port"
+                    android:title="Camera IP address and port" />
+
+                <CheckBoxPreference
+                    android:key="@string/prefs_chk_Camera4_Enabled"
+                    android:summary="Is the Camera Enabled"
+                    android:title="Enable Camera" />
+            </PreferenceCategory>
+        </PreferenceScreen>
+
+    </PreferenceScreen>
+
+    <!--    <PreferenceScreen
+            android:title="intent pref"
+            android:summary="intent pref">
+
+            <intent android:action="android.intent.action.VIEW"
+                android:data="http://developer.android.com/" />
+
+        </PreferenceScreen>
+        -->
 
 
 </PreferenceScreen>
