@@ -169,6 +169,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
                     break;
                 }
 
+                Log.i(TAG, "onClick: username - " + etUsername.getText().toString());
+                Log.i(TAG, "onClick: password - " + etPassword.getText().toString());
+                Log.i(TAG, "onClick: url - " + url);
                 dialog.show();
                 commsTest = new comms(this);
                 String[] myParams = {url, etUsername.getText().toString(), etPassword.getText().toString()};
@@ -214,6 +217,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
                     case 401:
                         //result.add("Error 401 - Unauthorized request.");
                         Toast.makeText(getApplicationContext(), "Error 401 - Unauthorized request.", Toast.LENGTH_LONG).show();
+                        break;
+                    case 999:
+                        Toast.makeText(getApplicationContext(), "Unexpected data - check URL", Toast.LENGTH_LONG).show();
                         break;
                 }
             }

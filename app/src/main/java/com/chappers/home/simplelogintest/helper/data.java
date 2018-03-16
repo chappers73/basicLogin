@@ -96,11 +96,11 @@ public class data {
 
             // Get System Status
             systemStatus = (String) obj.get("status");
-            //Log.i(TAG, "extractData: status - " + systemStatus);
+            Log.i(TAG, "extractData: status - " + systemStatus);
 
             // Get system Start Time
             startTime = (String) obj.get("StartTime");
-            //Log.i(TAG, "extractData: StartTime - " + startTime);
+            Log.i(TAG, "extractData: StartTime - " + startTime);
 
             // Get Recent trigger
             JSONArray triggers = new JSONArray(obj.getJSONArray("baz").toString());
@@ -117,7 +117,7 @@ public class data {
 
             // Add the Triggers found to the AdminUsers
             for (int i = 0; i < adminUsers.length(); i++) {
-                System.out.println("adminUsers: " + adminUsers.getString(i));
+                //System.out.println("adminUsers: " + adminUsers.getString(i));
                 //Log.i(TAG, "extractData: adminUsers - " + adminUsers.getString(i));
                 adminItems.add(adminUsers.getString(i));
             }
@@ -125,6 +125,7 @@ public class data {
             //    Log.i(TAG, "extractData: Trigger - " + what.toString());
 
         } catch (IOException | JSONException e) {
+            respCode = 999;
             e.printStackTrace();
         } finally {
             //Log.d(TAG, "connectHome: Disconnecting htc connection");

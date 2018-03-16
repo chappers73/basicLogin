@@ -60,12 +60,12 @@ public class comms extends AsyncTask<String, Void, data> {
 
             returnData.setHtc(htc);
             htc.disconnect();
-            Log.i(TAG, "doInBackground: about to return");
+            //Log.i(TAG, "doInBackground: about to return");
             return returnData;
 
         } catch (IOException e) {
             e.printStackTrace();
-            Log.i(TAG, "doInBackground: Catch ERROR");
+            //Log.i(TAG, "doInBackground: Catch ERROR");
             return returnData;
         }
 
