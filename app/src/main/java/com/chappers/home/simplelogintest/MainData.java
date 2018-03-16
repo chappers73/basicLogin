@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TabHost;
 
 import java.util.Objects;
 
@@ -20,12 +21,38 @@ public class MainData extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
 
         // Hide the title bar
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main_data);
-        Objects.requireNonNull(getSupportActionBar()).hide();
+
+        TabHost host = (TabHost)findViewById(R.id.tabhost_data);
+        host.setBackgroundResource(R.drawable.dmitriyilkevich434297unsplash_smaller);
+        host.setup();
+
+        //Tab 1
+        TabHost.TabSpec spec = host.newTabSpec("Activity");
+        spec.setContent(R.id.tab1);
+        spec.setIndicator("Activity");
+
+        host.addTab(spec);
+
+        //Tab 2
+        spec = host.newTabSpec("Whos In");
+        spec.setContent(R.id.tab2);
+        spec.setIndicator("Whos In");
+        host.addTab(spec);
+
+        //Tab 3
+        spec = host.newTabSpec("Cameras");
+        spec.setContent(R.id.tab3);
+        spec.setIndicator("Cameras");
+        host.addTab(spec);
+
+        //host.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.failedgoals); //fro first tab
+
     }
 
 

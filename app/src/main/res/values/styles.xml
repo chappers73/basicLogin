@@ -21,4 +21,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="TabWidgetTheme" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/Nearly_white</item>
+        <item name="android:textColorPrimary">@color/Username_Background_Grey</item>
+    </style>
+
 </resources>

@@ -145,10 +145,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
             case R.id.btnLogin:
 
                 if(TextUtils.isEmpty(etUsername.getText())) {
+                    etUsername.requestFocus();
+                    etUsername.setActivated(true);
                     etUsername.setError("You must enter a username");
                     return;
                 }
                 if(TextUtils.isEmpty(etPassword.getText())) {
+                    etPassword.requestFocus();
+                    etPassword.setActivated(true);
                     etPassword.setError("You must enter a password");
                     return;
                 }
