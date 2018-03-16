@@ -3,6 +3,7 @@ package com.chappers.home.simplelogintest.helper;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,20 +15,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 public class data {
 
     private static final String             TAG = "data";
     private HttpURLConnection htc;
-    private ArrayList<String> adminItems = new ArrayList<String>();     // List of Admin Users detected
+    private ArrayList<String> adminItems = new ArrayList<>();     // List of Admin Users detected
     private ArrayList<String>               triggerItems = new ArrayList<String>();   // List of tiggers
     private String                          adminStatus;    // Re-scanning for Admin -> House Empty
     private String                          systemStatus;   // Whats happening, Admin Found..., Still searching..., Searching Network
     private String                          startTime;      // When did the Alarm System Start
     private String                          alarmStatus;    // String If AlarmActive -> "House Alarm - Active" or Disabled
     private StringBuilder                   result = new StringBuilder();
+    private Integer                         respCode = 0;
 
 
     // region Public Getters
@@ -35,11 +36,25 @@ public class data {
         return htc;
     }
 
+    public Integer getRespCode() {
+        return respCode;
+    }
+
+    public void setRespCode(Integer respCode) {
+        this.respCode = respCode;
+    }
+
     @TargetApi(Build.VERSION_CODES.N)
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void setHtc(HttpURLConnection htc) throws ParseException {
+    public void setHtc(HttpURLConnection htc) throws IOException {
         this.htc = htc;
-        extractData();
+        String msg = htc.getResponseMessage();
+        int s2 = htc.getResponseCode();
+        Log.i(TAG, "setHtc: Response Code - " + Integer.toString(s2));
+        Log.i(TAG, "setHtc: msg - " + msg);
+        respCode = s2;
+        if (respCode == 200)
+            extractData();
     }
 
     public ArrayList<String> getAdminItems() {
@@ -109,9 +124,7 @@ public class data {
             //for(Object what : triggers)
             //    Log.i(TAG, "extractData: Trigger - " + what.toString());
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         } finally {
             //Log.d(TAG, "connectHome: Disconnecting htc connection");

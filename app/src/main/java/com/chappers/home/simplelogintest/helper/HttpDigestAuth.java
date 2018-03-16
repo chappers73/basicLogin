@@ -29,7 +29,7 @@ public class HttpDigestAuth
         return connection;
     }
 
-    public static HttpURLConnection tryDigestAuthentication(HttpURLConnection input, String username, String password)
+    private static HttpURLConnection tryDigestAuthentication(HttpURLConnection input, String username, String password)
     {
         String auth = input.getHeaderField("WWW-Authenticate");
         if(auth == null || !auth.startsWith("Digest ")){

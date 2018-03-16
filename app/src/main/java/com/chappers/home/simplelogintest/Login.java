@@ -1,6 +1,5 @@
 package com.chappers.home.simplelogintest;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,23 +20,30 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.Switch;
 import android.widget.Toast;
+
+import com.chappers.home.simplelogintest.helper.OnDataSendToActivity;
+import com.chappers.home.simplelogintest.helper.comms;
+import com.chappers.home.simplelogintest.helper.data;
+
+import org.json.JSONObject;
 
 import java.util.Objects;
 
-public class Login extends AppCompatActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener{
+public class Login extends AppCompatActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener
+                                ,OnDataSendToActivity {
 
-    private EditText                    etUsername;
-    private EditText                    etPassword;
-    private EditText                    etTitle;
-    private Button                      btnLogin;
-    private ImageView                   img_menu;
-    private ProgressDialog              dialog;
-    private static final String         TAG = "Login";
-    private SharedPreferences           prefs;
-    private SharedPreferences           getPrefs;
-    private boolean                     rememberme;
+    private EditText                                etUsername;
+    private EditText                                etPassword;
+    private EditText                                etTitle;
+    private Button                                  btnLogin;
+    private ImageView                               img_menu;
+    private ProgressDialog                          dialog;
+    private static final String                     TAG = "Login";
+    private SharedPreferences                       prefs;
+    private SharedPreferences                       getPrefs;
+    private boolean                                 rememberme;
+    private comms                                   commsTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,19 +64,19 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
 
     }
 
-    private void initSystem(){
+    private void initSystem() {
         // get the shared pref's
         prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
 
         // find the items
-        etUsername =            findViewById(R.id.etUsername);
-        etPassword =            findViewById(R.id.etPassword);
-        etTitle =               findViewById(R.id.etTitle);
-        btnLogin =              findViewById(R.id.btnLogin);
-        img_menu =              findViewById(R.id.img_prefs);
+        etUsername = findViewById(R.id.etUsername);
+        etPassword = findViewById(R.id.etPassword);
+        etTitle = findViewById(R.id.etTitle);
+        btnLogin = findViewById(R.id.btnLogin);
+        img_menu = findViewById(R.id.img_prefs);
 
         // Set the progress Dialog up
-        dialog =                new ProgressDialog(this);
+        dialog = new ProgressDialog(this);
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
         dialog.setMessage("Checking Credentials....");
@@ -98,22 +103,23 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         MenuInflater blowUp = getMenuInflater();
-        blowUp.inflate(R.menu.cool_menu,menu);
+        blowUp.inflate(R.menu.cool_menu, menu);
         return super.onCreateOptionsMenu(menu);
         //return true;
     }
+
     //endregion
     //region onMenuItemClick(MenuItem item)
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.preferences:
                 Log.i(TAG, "onOptionsItemSelected: Pref selected");
-                Intent i = new Intent(this,Prefs.class);
+                Intent i = new Intent(this, Prefs.class);
                 startActivity(i);
                 return true;
             case R.id.exit:
                 Log.i(TAG, "onOptionsItemSelected: exit called");
-                ((Activity)this).finish();
+                this.finish();
                 System.exit(0);
                 return true;
             default:
@@ -125,38 +131,49 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
     //region private void openKeyboard()
     private void openKeyboard() {
         InputMethodManager imm = (InputMethodManager) Login.this.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if(imm != null){
+        if (imm != null) {
             imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
         }
     }
+
     //endregion
     //region private void closeKeyboard()
     private void closeKeyboard() {
-        InputMethodManager inputManager = (InputMethodManager)Login.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager inputManager = (InputMethodManager) Login.this.getSystemService(Context.INPUT_METHOD_SERVICE);
         assert inputManager != null;
         inputManager.hideSoftInputFromWindow(Objects.requireNonNull(Login.this.getCurrentFocus()).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
     }
     //endregion
 
+    private boolean checkCredentials(String username, String password){
+        Boolean ret = false;
+
+
+        return  ret;
+    }
+
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.btnLogin:
 
-                if(TextUtils.isEmpty(etUsername.getText())) {
+                if (TextUtils.isEmpty(etUsername.getText())) {
                     etUsername.requestFocus();
                     etUsername.setActivated(true);
                     etUsername.setError("You must enter a username");
                     return;
                 }
-                if(TextUtils.isEmpty(etPassword.getText())) {
+                if (TextUtils.isEmpty(etPassword.getText())) {
                     etPassword.requestFocus();
                     etPassword.setActivated(true);
                     etPassword.setError("You must enter a password");
                     return;
                 }
                 dialog.show();
+                commsTest = new comms(this);
+                String[] myParams = {"http://chappers.hopto.org:2608/getData",etUsername.getText().toString(),etPassword.getText().toString()};
+                commsTest.execute(myParams);
                 SharedPreferences.Editor editor = getPrefs.edit();
                 if (getPrefs.getBoolean("prefs_cb_rememberMe", false)) {
                     editor.putString("prefs_et_UserInfo_Username", etUsername.getText().toString());
@@ -168,15 +185,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
                 if (imm.isAcceptingText()) {
                     closeKeyboard();
                 }
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        // yourMethod();
-                        dialog.dismiss();
-                        Intent i = new Intent(Login.this, MainData.class);
-                        startActivity(i);
-                    }
-                }, 5000);   //5 seconds
+
                 break;
 
             case R.id.img_prefs:
@@ -191,4 +200,32 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
 
     }
 
+    @Override
+    public void sendData(data res) {
+        final Integer statusCode = res.getRespCode();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                // yourMethod();
+                dialog.dismiss();
+                switch (statusCode) {
+
+                    case 200:
+                        Intent i = new Intent(Login.this, MainData.class);
+                        startActivity(i);
+                        break;
+                    case 400:
+                        //result.add("Error 400 - Bad request.");
+                        Toast.makeText(getApplicationContext(),"Error 400 - Bad request.", Toast.LENGTH_LONG).show();
+                        break;
+                    case 401:
+                        //result.add("Error 401 - Unauthorized request.");
+                        Toast.makeText(getApplicationContext(),"Error 401 - Unauthorized request.", Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+        }, 2000);
+
+
+    }
 }

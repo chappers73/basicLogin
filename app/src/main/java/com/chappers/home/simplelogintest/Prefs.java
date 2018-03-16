@@ -9,12 +9,6 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
-import android.support.annotation.Nullable;
-
-import java.util.Arrays;
-import java.util.Map;
-import java.util.prefs.Preferences;
 
 public class Prefs extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 

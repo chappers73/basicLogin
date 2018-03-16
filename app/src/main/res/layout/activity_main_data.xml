@@ -43,11 +43,29 @@
                     android:textColor="@color/Nearly_white"
                     android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/button"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tvAlarmStarted"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Button" />
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="8dp"
+                        android:hint="Alarm Started"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <ListView
+                        android:id="@+id/lv_Triggers"
+                        android:layout_width="354dp"
+                        android:layout_height="314dp"
+                        android:layout_marginTop="28dp"
+                        android:layout_marginEnd="8dp"
+                        android:dividerHeight="-20dp"
+                        android:scrollbars="vertical"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvAlarmStarted" />
                 </LinearLayout>
 
                 <LinearLayout
