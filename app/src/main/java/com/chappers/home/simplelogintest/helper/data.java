@@ -20,8 +20,8 @@ import java.util.ArrayList;
 public class data {
 
     private static final String             TAG = "data";
-    private HttpURLConnection htc;
-    private ArrayList<String> adminItems = new ArrayList<>();     // List of Admin Users detected
+    private HttpURLConnection               htc;
+    private ArrayList<String>               adminItems = new ArrayList<>();     // List of Admin Users detected
     private ArrayList<String>               triggerItems = new ArrayList<String>();   // List of tiggers
     private String                          adminStatus;    // Re-scanning for Admin -> House Empty
     private String                          systemStatus;   // Whats happening, Admin Found..., Still searching..., Searching Network
@@ -128,6 +128,7 @@ public class data {
             e.printStackTrace();
         } finally {
             //Log.d(TAG, "connectHome: Disconnecting htc connection");
+
             htc.disconnect();
         }
 

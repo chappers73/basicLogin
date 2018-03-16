@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
 public class comms extends AsyncTask<String, Void, data> {
     private static final String TAG = "comms";
     private Context contextView;
@@ -23,14 +22,13 @@ public class comms extends AsyncTask<String, Void, data> {
     OnDataSendToActivity dataSendToActivity;
 
     public comms(Activity activity) {
-        dataSendToActivity = (OnDataSendToActivity)activity;
+        dataSendToActivity = (OnDataSendToActivity) activity;
     }
 
     @Override
     protected void onPostExecute(data data) {
         //super.onPostExecute(data);
         dataSendToActivity.sendData(data);
-
     }
 
     @Override
@@ -76,8 +74,8 @@ public class comms extends AsyncTask<String, Void, data> {
 
     //@Override
     //protected void onPostExecute(String result) {
-     //   super.onPostExecute(result);
-     //   dataSendToActivity.sendData(result);
+    //   super.onPostExecute(result);
+    //   dataSendToActivity.sendData(result);
     //}
 }
 
