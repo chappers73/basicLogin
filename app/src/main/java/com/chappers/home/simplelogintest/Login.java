@@ -26,24 +26,22 @@ import com.chappers.home.simplelogintest.helper.OnDataSendToActivity;
 import com.chappers.home.simplelogintest.helper.comms;
 import com.chappers.home.simplelogintest.helper.data;
 
-import org.json.JSONObject;
-
 import java.util.Objects;
 
 public class Login extends AppCompatActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener
-                                ,OnDataSendToActivity {
+        , OnDataSendToActivity {
 
-    private EditText                                etUsername;
-    private EditText                                etPassword;
-    private EditText                                etTitle;
-    private Button                                  btnLogin;
-    private ImageView                               img_menu;
-    private ProgressDialog                          dialog;
-    private static final String                     TAG = "Login";
-    private SharedPreferences                       prefs;
-    private SharedPreferences                       getPrefs;
-    private boolean                                 rememberme;
-    private comms                                   commsTest;
+    private EditText etUsername;
+    private EditText etPassword;
+    private EditText etTitle;
+    private Button btnLogin;
+    private ImageView img_menu;
+    private ProgressDialog dialog;
+    private static final String TAG = "Login";
+    private SharedPreferences prefs;
+    private SharedPreferences getPrefs;
+    private boolean rememberme;
+    private comms commsTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,17 +144,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
     }
     //endregion
 
-    private boolean checkCredentials(String username, String password){
-        Boolean ret = false;
-
-
-        return  ret;
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnLogin:
+
+                closeKeyboard();
 
                 if (TextUtils.isEmpty(etUsername.getText())) {
                     etUsername.requestFocus();
@@ -170,20 +163,20 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
                     etPassword.setError("You must enter a password");
                     return;
                 }
+                String url = getPrefs.getString("prefs_et_Server_URL", "");
+                if (url == ""){
+                    Toast.makeText(getApplicationContext(), "Server URL empty - FIX this...", Toast.LENGTH_LONG).show();
+                    break;
+                }
+
                 dialog.show();
                 commsTest = new comms(this);
-                String[] myParams = {"http://chappers.hopto.org:2608/getData",etUsername.getText().toString(),etPassword.getText().toString()};
+                String[] myParams = {url, etUsername.getText().toString(), etPassword.getText().toString()};
                 commsTest.execute(myParams);
                 SharedPreferences.Editor editor = getPrefs.edit();
                 if (getPrefs.getBoolean("prefs_cb_rememberMe", false)) {
                     editor.putString("prefs_et_UserInfo_Username", etUsername.getText().toString());
                     editor.apply();
-                }
-                InputMethodManager imm = (InputMethodManager) Login.this.getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                assert imm != null;
-                if (imm.isAcceptingText()) {
-                    closeKeyboard();
                 }
 
                 break;
@@ -195,11 +188,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
                 inflater.inflate(R.menu.cool_menu, popup.getMenu());
                 popup.show();
                 break;
-
         }
-
     }
 
+    // Response from the commsn AsyncTask class via the interface
     @Override
     public void sendData(data res) {
         final Integer statusCode = res.getRespCode();
@@ -209,22 +201,23 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
                 // yourMethod();
                 dialog.dismiss();
                 switch (statusCode) {
-
                     case 200:
                         Intent i = new Intent(Login.this, MainData.class);
+                        i.putExtra("password", etPassword.getText().toString());
                         startActivity(i);
                         break;
+                    case 0:
                     case 400:
                         //result.add("Error 400 - Bad request.");
-                        Toast.makeText(getApplicationContext(),"Error 400 - Bad request.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Error " + statusCode.toString() + " - Bad request.", Toast.LENGTH_LONG).show();
                         break;
                     case 401:
                         //result.add("Error 401 - Unauthorized request.");
-                        Toast.makeText(getApplicationContext(),"Error 401 - Unauthorized request.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Error 401 - Unauthorized request.", Toast.LENGTH_LONG).show();
                         break;
                 }
             }
-        }, 2000);
+        }, 1000);
 
 
     }
