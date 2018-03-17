@@ -26,4 +26,13 @@
         <item name="android:textColorPrimary">@color/Username_Background_Grey</item>
     </style>
 
+    <style name="ListFont" parent="@android:style/Widget.ListView">
+        <item name="android:textColor">#6fffffff</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="CodeFont" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">#00FF00</item>
+        <item name="android:typeface">monospace</item>
+    </style>
 </resources>

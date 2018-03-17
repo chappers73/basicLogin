@@ -49,11 +49,10 @@ public class data {
     public void setHtc(HttpURLConnection htc) throws IOException {
         this.htc = htc;
         String msg = htc.getResponseMessage();
-        int s2 = htc.getResponseCode();
-        Log.i(TAG, "setHtc: Response Code - " + Integer.toString(s2));
-        Log.i(TAG, "setHtc: msg - " + msg);
-        respCode = s2;
-        if (respCode == 200)
+        respCode = htc.getResponseCode();
+        //Log.i(TAG, "setHtc: Response Code - " + Integer.toString(s2));
+        //Log.i(TAG, "setHtc: msg - " + msg);
+        if (respCode == HttpURLConnection.HTTP_OK)// code 200
             extractData();
     }
 
@@ -96,11 +95,11 @@ public class data {
 
             // Get System Status
             systemStatus = (String) obj.get("status");
-            Log.i(TAG, "extractData: status - " + systemStatus);
+            //Log.i(TAG, "extractData: status - " + systemStatus);
 
             // Get system Start Time
             startTime = (String) obj.get("StartTime");
-            Log.i(TAG, "extractData: StartTime - " + startTime);
+            //Log.i(TAG, "extractData: StartTime - " + startTime);
 
             // Get Recent trigger
             JSONArray triggers = new JSONArray(obj.getJSONArray("baz").toString());

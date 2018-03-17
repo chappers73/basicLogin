@@ -10,12 +10,17 @@ import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 import com.chappers.home.simplelogintest.helper.OnDataSendToActivity;
+import com.chappers.home.simplelogintest.helper.OnScreenLog;
 import com.chappers.home.simplelogintest.helper.comms;
 import com.chappers.home.simplelogintest.helper.data;
 
+import java.net.HttpURLConnection;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,6 +34,9 @@ public class MainData extends AppCompatActivity implements OnDataSendToActivity 
     private String url;
     private SharedPreferences getPrefs;
     private TimerTask task;
+    private OnScreenLog log;
+    private ListView lvTriggers;
+    private ListView lvAdmin;
 
     private static final String TAG = "MainData";
 
@@ -49,18 +57,27 @@ public class MainData extends AppCompatActivity implements OnDataSendToActivity 
         username = getPrefs.getString("prefs_et_UserInfo_Username", "username");
         url = getPrefs.getString("prefs_et_Server_URL", "url");
 
-         bundle = getIntent().getExtras();
+        bundle = getIntent().getExtras();
         if (bundle != null) {
             password = bundle.getString("password");
         }
-        if (username != "" && password != "" && url != ""){
+        if (username != "" && password != "" && url != "") {
             setRepeatingAsyncTask();
         }
+
+        //log = new OnScreenLog(this, R.id.content_1);
+        //log.log("Started log on Activity 1");
+
+        lvTriggers = findViewById(R.id.lv_Triggers);
+        lvAdmin = findViewById(R.id.lv_Admin);
+        ///*YOUR CHOICE OF COLOR*/
+        //            textView.setTextColor(Color.BLUE);
+
 
 
     }
 
-    private void setupTabs(){
+    private void setupTabs() {
 
         TabHost host = findViewById(R.id.tabhost_data);
         host.setBackgroundResource(R.drawable.dmitriyilkevich434297unsplash_smaller);
@@ -119,6 +136,7 @@ public class MainData extends AppCompatActivity implements OnDataSendToActivity 
 
     }
 
+    // Start the Repeating data collection using the External commsn class
     private void setRepeatingAsyncTask() {
 
         final Handler handler = new Handler();
@@ -144,13 +162,50 @@ public class MainData extends AppCompatActivity implements OnDataSendToActivity 
             }
         };
 
-        timer.schedule(task, 0, 5*1000);  // interval of one minute
+        timer.schedule(task, 0, 5 * 1000);  // interval of one minute
 
     }
+    /*
+// add values
+list.add("one");
+list.add("two");
 
+// your code
+for (String object: list) {
+    System.out.println(object);
+}
+     */
+
+    // Check for response OK or abort task with warning message
     @Override
-    public void sendData(data str) {
-        Log.i(TAG, "MainData - sendData: time started - " + str.getStartTime().toString());
+    public void sendData(data res) {
+        final Integer statusCode = res.getRespCode();
+
+        switch (statusCode) {
+            case HttpURLConnection.HTTP_OK:
+                //Log.i(TAG, "MainData - sendData: time started - " + res.getStartTime().toString());
+
+                //res.getTriggerItems().forEach((a)-> log.log(a)); //Lambda not in this version
+                for (String obj: res.getTriggerItems()){
+                    //log.log(obj);
+                }
+                ArrayAdapter<String> adapterTrigger = new ArrayAdapter<String>(this,
+                        R.layout.custom_list, res.getTriggerItems());
+                lvTriggers.setAdapter(adapterTrigger);
+
+                ArrayAdapter<String> adapterAdmin = new ArrayAdapter<String>(this,
+                        R.layout.custom_list, res.getAdminItems());
+                lvAdmin.setAdapter(adapterAdmin);
+
+
+                break;
+            default:
+                Toast.makeText(getApplicationContext(), "Error - " + statusCode.toString() + "\nAborting connection...", Toast.LENGTH_LONG).show();
+                break; // abort
+        }
+
+
+        Log.i(TAG, "MainData - sendData: time started - " + res.getStartTime().toString());
 
     }
 }

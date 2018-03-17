@@ -26,6 +26,7 @@ import com.chappers.home.simplelogintest.helper.OnDataSendToActivity;
 import com.chappers.home.simplelogintest.helper.comms;
 import com.chappers.home.simplelogintest.helper.data;
 
+import java.net.HttpURLConnection;
 import java.util.Objects;
 
 public class Login extends AppCompatActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener
@@ -198,29 +199,40 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
     @Override
     public void sendData(data res) {
         final Integer statusCode = res.getRespCode();
+        //HttpURLConnection htc = res.getHtc();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
                 // yourMethod();
                 dialog.dismiss();
                 switch (statusCode) {
-                    case 200:
+                    case HttpURLConnection.HTTP_OK:
                         Intent i = new Intent(Login.this, MainData.class);
                         i.putExtra("password", etPassword.getText().toString());
                         startActivity(i);
                         break;
                     case 0:
-                    case 400:
+                    case HttpURLConnection.HTTP_BAD_REQUEST://400
                         //result.add("Error 400 - Bad request.");
                         Toast.makeText(getApplicationContext(), "Error " + statusCode.toString() + " - Bad request.", Toast.LENGTH_LONG).show();
                         break;
-                    case 401:
+                    case HttpURLConnection.HTTP_UNAUTHORIZED://401
                         //result.add("Error 401 - Unauthorized request.");
-                        Toast.makeText(getApplicationContext(), "Error 401 - Unauthorized request.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Error 401 - Unauthorized request", Toast.LENGTH_LONG).show();
                         break;
+                    case HttpURLConnection.HTTP_UNAVAILABLE://503
+                        Toast.makeText(getApplicationContext(), "Error " + statusCode.toString() + " - HTTP Unavailable", Toast.LENGTH_LONG).show();
+                        break;// retry, server is unstable
+
+                    case HttpURLConnection.HTTP_GATEWAY_TIMEOUT://504
+                        Toast.makeText(getApplicationContext(), "Error " + statusCode.toString() + " - Gateway Timeout", Toast.LENGTH_LONG).show();
+                        break;// retry
                     case 999:
                         Toast.makeText(getApplicationContext(), "Unexpected data - check URL", Toast.LENGTH_LONG).show();
                         break;
+                    default:
+                        Toast.makeText(getApplicationContext(), "WTF Error - " + statusCode.toString(), Toast.LENGTH_LONG).show();
+                        break; // abort
                 }
             }
         }, 1000);
