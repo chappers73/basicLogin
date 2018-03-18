@@ -28,7 +28,11 @@ public class comms extends AsyncTask<String, Void, data> {
     @Override
     protected void onPostExecute(data data) {
         //super.onPostExecute(data);
-        dataSendToActivity.sendData(data);
+        try {
+            dataSendToActivity.sendData(data);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

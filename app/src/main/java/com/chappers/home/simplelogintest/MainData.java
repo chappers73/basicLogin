@@ -1,7 +1,11 @@
 package com.chappers.home.simplelogintest;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -9,15 +13,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chappers.home.simplelogintest.helper.NetworkChangeReceiver;
 import com.chappers.home.simplelogintest.helper.OnDataSendToActivity;
 import com.chappers.home.simplelogintest.helper.OnScreenLog;
 import com.chappers.home.simplelogintest.helper.comms;
+import com.chappers.home.simplelogintest.helper.connectivity;
 import com.chappers.home.simplelogintest.helper.data;
 
 import java.net.HttpURLConnection;
@@ -70,11 +78,6 @@ public class MainData extends AppCompatActivity implements OnDataSendToActivity 
 
         lvTriggers = findViewById(R.id.lv_Triggers);
         lvAdmin = findViewById(R.id.lv_Admin);
-        ///*YOUR CHOICE OF COLOR*/
-        //            textView.setTextColor(Color.BLUE);
-
-
-
     }
 
     private void setupTabs() {
@@ -165,16 +168,6 @@ public class MainData extends AppCompatActivity implements OnDataSendToActivity 
         timer.schedule(task, 0, 5 * 1000);  // interval of one minute
 
     }
-    /*
-// add values
-list.add("one");
-list.add("two");
-
-// your code
-for (String object: list) {
-    System.out.println(object);
-}
-     */
 
     // Check for response OK or abort task with warning message
     @Override
@@ -200,12 +193,21 @@ for (String object: list) {
 
                 break;
             default:
-                Toast.makeText(getApplicationContext(), "Error - " + statusCode.toString() + "\nAborting connection...", Toast.LENGTH_LONG).show();
+                if (connectivity.isConnected(this)){
+                    Toast.makeText(getApplicationContext(), "Error - " + statusCode.toString() + "\nStill connected to the Internet\nAnother error?", Toast.LENGTH_LONG).show();
+                 }else{
+                    task.cancel();
+                    Toast.makeText(getApplicationContext(), "Error - " + statusCode.toString() + "\nAborting connection...", Toast.LENGTH_LONG).show();
+                    super.onBackPressed();
+
+                }
+
+
                 break; // abort
         }
 
 
-        Log.i(TAG, "MainData - sendData: time started - " + res.getStartTime().toString());
+        //Log.i(TAG, "MainData - sendData: time started - " + res.getStartTime().toString());
 
     }
 }

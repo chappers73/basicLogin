@@ -1,9 +1,14 @@
 package com.chappers.home.simplelogintest;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -20,8 +25,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chappers.home.simplelogintest.helper.NetworkChangeReceiver;
 import com.chappers.home.simplelogintest.helper.OnDataSendToActivity;
 import com.chappers.home.simplelogintest.helper.comms;
 import com.chappers.home.simplelogintest.helper.data;
@@ -35,7 +42,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
     private EditText etUsername;
     private EditText etPassword;
     private EditText etTitle;
-    private Button btnLogin;
+    private static Button btnLogin;
     private ImageView img_menu;
     private ProgressDialog dialog;
     private static final String TAG = "Login";
@@ -43,6 +50,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
     private SharedPreferences getPrefs;
     private boolean rememberme;
     private comms commsTest;
+    private BroadcastReceiver mNetworkReceiver;
+    static TextView tv_check_connection;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +73,31 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
 
     }
 
+//https://stackoverflow.com/questions/15698790/broadcast-receiver-for-checking-internet-connection-in-android-app
+    private void registerNetworkBroadcastForNougat() {
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        } */
+        registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    protected void unregisterNetworkChanges() {
+        try {
+            unregisterReceiver(mNetworkReceiver);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterNetworkChanges();
+    }
+
     private void initSystem() {
         // get the shared pref's
         prefs = getSharedPreferences("my_prefs", MODE_PRIVATE);
@@ -73,6 +108,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
         etTitle = findViewById(R.id.etTitle);
         btnLogin = findViewById(R.id.btnLogin);
         img_menu = findViewById(R.id.img_prefs);
+        tv_check_connection=(TextView) findViewById(R.id.tv_check_connection);
+        mNetworkReceiver = new NetworkChangeReceiver(Login.this);
+        registerNetworkBroadcastForNougat();
 
         // Set the progress Dialog up
         dialog = new ProgressDialog(this);
@@ -95,6 +133,31 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
         else {
             etUsername.requestFocus();
             etUsername.setActivated(true);
+        }
+    }
+
+    public static void dialog(boolean value){
+
+        if(value){
+            tv_check_connection.setText("Internet Connection detected");
+            tv_check_connection.setBackgroundColor(Color.GRAY);
+            tv_check_connection.setTextColor(Color.WHITE);
+            btnLogin.setEnabled(true);
+
+            Handler handler = new Handler();
+            Runnable delayrunnable = new Runnable() {
+                @Override
+                public void run() {
+                    tv_check_connection.setVisibility(View.GONE);
+                }
+            };
+            handler.postDelayed(delayrunnable, 2000);
+        }else {
+            btnLogin.setEnabled(false);
+            tv_check_connection.setVisibility(View.VISIBLE);
+            tv_check_connection.setText("Check your internet connection");
+            tv_check_connection.setBackgroundColor(Color.RED);
+            tv_check_connection.setTextColor(Color.WHITE);
         }
     }
 

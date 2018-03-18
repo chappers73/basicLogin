@@ -9,6 +9,19 @@
 
     <!-- Background Image -->
 
+    <TextView
+        android:id="@+id/tv_check_connection2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Connection establised !"
+        app:layout_constraintBottom_toBottomOf="@+id/tabhost_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tabhost_data"
+        app:layout_constraintTop_toTopOf="@+id/tabhost_data" />
 
     <TabHost
         android:id="@+id/tabhost_data"
@@ -46,19 +59,6 @@
                     android:orientation="vertical">
 
 
-                    <TextView
-                        android:id="@+id/tvAlarmStarted"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/ListFont"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="8dp"
-                        android:hint="Alarm Started"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
                     <ListView
                         android:id="@+id/lv_Triggers"
                         android:layout_width="354dp"
@@ -69,6 +69,19 @@
                         android:scrollbars="vertical"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvAlarmStarted"/>
+
+                    <TextView
+                        android:id="@+id/tvAlarmStarted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:hint="Alarm Started"
+                        android:textSize="18sp"
+                        android:theme="@style/ListFont"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                 </LinearLayout>
 
