@@ -50,7 +50,7 @@
                 android:layout_height="match_parent"
                 android:theme="@style/ListFont">
 
-                //TAB 1 - Triggers
+                <!---->TAB 1 - Triggers
                 <LinearLayout
                     android:id="@+id/tab1"
                     android:layout_width="match_parent"

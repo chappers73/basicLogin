@@ -11,9 +11,7 @@ import static com.chappers.home.simplelogintest.Login.dialog;
 
 public class NetworkChangeReceiver extends BroadcastReceiver
 {
-    private Context context;
-    public NetworkChangeReceiver(Context context) {
-        this.context = context;
+    public NetworkChangeReceiver() {
     }
 
     @Override
@@ -21,7 +19,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver
     {
         try
         {
-            if (isOnline(this.context)) {
+            if (isOnline(context)) {
                 dialog(true);
                 Log.e("keshav", "Online Connect Intenet ");
             } else {
@@ -37,7 +35,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver
 
     private boolean isOnline(Context context) {
         try {
-            ConnectivityManager cm = (ConnectivityManager) this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
             //should check null because in airplane mode it will be null
             return (netInfo != null && netInfo.isConnected());

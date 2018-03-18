@@ -108,8 +108,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
         etTitle = findViewById(R.id.etTitle);
         btnLogin = findViewById(R.id.btnLogin);
         img_menu = findViewById(R.id.img_prefs);
-        tv_check_connection=(TextView) findViewById(R.id.tv_check_connection);
-        mNetworkReceiver = new NetworkChangeReceiver(Login.this);
+        tv_check_connection= findViewById(R.id.tv_check_connection);
+        mNetworkReceiver = new NetworkChangeReceiver();
         registerNetworkBroadcastForNougat();
 
         // Set the progress Dialog up
@@ -139,7 +139,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
     public static void dialog(boolean value){
 
         if(value){
-            tv_check_connection.setText("Internet Connection detected");
+            tv_check_connection.setText(R.string.dialog_InternetFound);
             tv_check_connection.setBackgroundColor(Color.GRAY);
             tv_check_connection.setTextColor(Color.WHITE);
             btnLogin.setEnabled(true);
@@ -155,7 +155,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
         }else {
             btnLogin.setEnabled(false);
             tv_check_connection.setVisibility(View.VISIBLE);
-            tv_check_connection.setText("Check your internet connection");
+            tv_check_connection.setText(R.string.Dialog_InternetMissing);
             tv_check_connection.setBackgroundColor(Color.RED);
             tv_check_connection.setTextColor(Color.WHITE);
         }
@@ -228,7 +228,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
                     return;
                 }
                 String url = getPrefs.getString("prefs_et_Server_URL", "");
-                if (url == ""){
+                if (url.equals("")){
                     Toast.makeText(getApplicationContext(), "Server URL empty - FIX this...", Toast.LENGTH_LONG).show();
                     break;
                 }

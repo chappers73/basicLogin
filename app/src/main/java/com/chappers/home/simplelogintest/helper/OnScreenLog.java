@@ -41,12 +41,12 @@ public class OnScreenLog {
         LinearLayout linearLayout;
         RelativeLayout relativeLayout;
         try {
-            linearLayout = (LinearLayout) activity.findViewById(ViewID);
-        } catch (ClassCastException e) {linearLayout = null;};
+            linearLayout = activity.findViewById(ViewID);
+        } catch (ClassCastException e) {linearLayout = null;}
 
         try {
-            relativeLayout = (RelativeLayout) activity.findViewById(ViewID);
-        } catch (ClassCastException e) {relativeLayout = null;};
+            relativeLayout = activity.findViewById(ViewID);
+        } catch (ClassCastException e) {relativeLayout = null;}
         if(linearLayout != null) {
             linearLayout.addView(tvLog);
             v = linearLayout;

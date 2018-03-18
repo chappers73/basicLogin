@@ -1,11 +1,7 @@
 package com.chappers.home.simplelogintest;
 
-import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -13,15 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TabHost;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chappers.home.simplelogintest.helper.NetworkChangeReceiver;
 import com.chappers.home.simplelogintest.helper.OnDataSendToActivity;
 import com.chappers.home.simplelogintest.helper.OnScreenLog;
 import com.chappers.home.simplelogintest.helper.comms;
@@ -35,6 +28,7 @@ import java.util.TimerTask;
 
 public class MainData extends AppCompatActivity implements OnDataSendToActivity {
 
+    private static final String TAG = "MainData";
     private comms commsTest;
     private Bundle bundle;
     private String password;
@@ -45,8 +39,6 @@ public class MainData extends AppCompatActivity implements OnDataSendToActivity 
     private OnScreenLog log;
     private ListView lvTriggers;
     private ListView lvAdmin;
-
-    private static final String TAG = "MainData";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +61,7 @@ public class MainData extends AppCompatActivity implements OnDataSendToActivity 
         if (bundle != null) {
             password = bundle.getString("password");
         }
-        if (username != "" && password != "" && url != "") {
+        if (!username.equals("") && !password.equals("") && !url.equals("")) {
             setRepeatingAsyncTask();
         }
 
@@ -112,7 +104,7 @@ public class MainData extends AppCompatActivity implements OnDataSendToActivity 
 
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
-        Log.i(TAG, "onCreateOptionsMenu: DID we get here?");
+        //Log.i(TAG, "onCreateOptionsMenu: DID we get here?");
         MenuInflater blowUp = getMenuInflater();
         blowUp.inflate(R.menu.cool_menu, menu);
         return super.onCreateOptionsMenu(menu);
@@ -179,9 +171,9 @@ public class MainData extends AppCompatActivity implements OnDataSendToActivity 
                 //Log.i(TAG, "MainData - sendData: time started - " + res.getStartTime().toString());
 
                 //res.getTriggerItems().forEach((a)-> log.log(a)); //Lambda not in this version
-                for (String obj: res.getTriggerItems()){
-                    //log.log(obj);
-                }
+                //for (String obj: res.getTriggerItems()){
+                //log.log(obj);
+                //}
                 ArrayAdapter<String> adapterTrigger = new ArrayAdapter<String>(this,
                         R.layout.custom_list, res.getTriggerItems());
                 lvTriggers.setAdapter(adapterTrigger);
@@ -193,9 +185,9 @@ public class MainData extends AppCompatActivity implements OnDataSendToActivity 
 
                 break;
             default:
-                if (connectivity.isConnected(this)){
+                if (connectivity.isConnected(this)) {
                     Toast.makeText(getApplicationContext(), "Error - " + statusCode.toString() + "\nStill connected to the Internet\nAnother error?", Toast.LENGTH_LONG).show();
-                 }else{
+                } else {
                     task.cancel();
                     Toast.makeText(getApplicationContext(), "Error - " + statusCode.toString() + "\nAborting connection...", Toast.LENGTH_LONG).show();
                     super.onBackPressed();

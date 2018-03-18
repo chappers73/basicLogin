@@ -15,8 +15,8 @@ import java.net.URL;
 
 public class comms extends AsyncTask<String, Void, data> {
     private static final String TAG = "comms";
-    private Context contextView;
-    private TextView textview;
+    //private Context contextView;
+    //private TextView textview;
     public data returnData = new data();
 
     OnDataSendToActivity dataSendToActivity;
@@ -41,7 +41,7 @@ public class comms extends AsyncTask<String, Void, data> {
 
     @Override
     protected void onProgressUpdate(Void... values) {
-        textview.setText("Connecting...");
+        //textview.setText("Connecting...");
     }
 
     @TargetApi(Build.VERSION_CODES.N)

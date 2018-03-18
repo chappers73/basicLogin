@@ -33,4 +33,6 @@
     <string name="prefs_et_Camera_4_URL">prefs_et_Camera_4_URL</string>
     <string name="prefs_et_Camera_4_Name">prefs_et_Camera_4_Name</string>
     <string name="prefs_chk_Camera4_Enabled">prefs_chk_Camera4_Enabled</string>
+    <string name="dialog_InternetFound">Internet Connection detected</string>
+    <string name="Dialog_InternetMissing">Check your internet connection</string>
 </resources>
