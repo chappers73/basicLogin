@@ -43,6 +43,7 @@ public class MainData extends AppCompatActivity implements OnDataSendToActivity 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         // Hide the title bar
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         Objects.requireNonNull(getSupportActionBar()).hide();
