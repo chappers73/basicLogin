@@ -7,12 +7,17 @@
         android:alphabeticShortcut="a"/>-->
 
     <item
+        android:title="Cam Test"
+        android:id="@+id/cam_test"/>
+
+    <item
         android:title="Settings"
         android:id="@+id/preferences"/>
 
     <item
         android:title="Exit"
         android:id="@+id/exit"/>
+
 
 
 

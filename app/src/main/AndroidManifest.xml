@@ -2,12 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chappers.home.simplelogintest">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
 
     <application
         android:allowBackup="true"
@@ -19,11 +18,12 @@
         <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Prefs"/>
-        <activity android:name=".MainData"/>
+        <activity android:name=".Prefs" />
+        <activity android:name=".MainData" />
 
         <receiver android:name=".helper.NetworkChangeReceiver">
             <intent-filter>
@@ -31,7 +31,7 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".CameraTest"></activity>
     </application>
-
 
 </manifest>

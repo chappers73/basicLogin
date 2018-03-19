@@ -6,17 +6,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -43,6 +49,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
     private EditText etPassword;
     private EditText etTitle;
     private static Button btnLogin;
+    private static Button btn_test;
     private ImageView img_menu;
     private ProgressDialog dialog;
     private static final String TAG = "Login";
@@ -52,6 +59,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
     private comms commsTest;
     private BroadcastReceiver mNetworkReceiver;
     static TextView tv_check_connection;
+    private SurfaceView mSurfaceView;
+    private SurfaceHolder surfaceHolder;
+    private RtspClient mRtspClient;
 
 
     @Override
@@ -69,11 +79,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
         initSystem();
         btnLogin.setOnClickListener(this);
         img_menu.setOnClickListener(this);
+        btnLogin.setOnClickListener(this);
 
 
     }
 
-//https://stackoverflow.com/questions/15698790/broadcast-receiver-for-checking-internet-connection-in-android-app
+    //https://stackoverflow.com/questions/15698790/broadcast-receiver-for-checking-internet-connection-in-android-app
     private void registerNetworkBroadcastForNougat() {
        /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -107,8 +118,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
         etPassword = findViewById(R.id.etPassword);
         etTitle = findViewById(R.id.etTitle);
         btnLogin = findViewById(R.id.btnLogin);
-        img_menu = findViewById(R.id.img_prefs);
-        tv_check_connection= findViewById(R.id.tv_check_connection);
+         img_menu = findViewById(R.id.img_prefs);
+        tv_check_connection = findViewById(R.id.tv_check_connection);
         mNetworkReceiver = new NetworkChangeReceiver();
         registerNetworkBroadcastForNougat();
 
@@ -136,9 +147,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
         }
     }
 
-    public static void dialog(boolean value){
+    public static void dialog(boolean value) {
 
-        if(value){
+        if (value) {
             tv_check_connection.setText(R.string.dialog_InternetFound);
             tv_check_connection.setBackgroundColor(Color.GRAY);
             tv_check_connection.setTextColor(Color.WHITE);
@@ -152,7 +163,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
                 }
             };
             handler.postDelayed(delayrunnable, 2000);
-        }else {
+        } else {
             btnLogin.setEnabled(false);
             tv_check_connection.setVisibility(View.VISIBLE);
             tv_check_connection.setText(R.string.Dialog_InternetMissing);
@@ -184,6 +195,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
                 this.finish();
                 System.exit(0);
                 return true;
+            case R.id.cam_test:
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent (Login.this, CameraTest.class);
+                        startActivity(intent);
+                    }
+                });
+                return true;
+
             default:
                 return false;
         }
@@ -215,6 +237,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
 
                 closeKeyboard();
 
+
                 if (TextUtils.isEmpty(etUsername.getText())) {
                     etUsername.requestFocus();
                     etUsername.setActivated(true);
@@ -228,7 +251,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
                     return;
                 }
                 String url = getPrefs.getString("prefs_et_Server_URL", "");
-                if (url.equals("")){
+                if (url.equals("")) {
                     Toast.makeText(getApplicationContext(), "Server URL empty - FIX this...", Toast.LENGTH_LONG).show();
                     break;
                 }
@@ -255,6 +278,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
                 inflater.inflate(R.menu.cool_menu, popup.getMenu());
                 popup.show();
                 break;
+
         }
     }
 
@@ -302,4 +326,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener, Po
 
 
     }
+
+
 }
+
+
