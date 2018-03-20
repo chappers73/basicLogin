@@ -70,7 +70,7 @@ public class RtspClient {
     private String authorName, authorPassword, authorBase64;
     private HandlerThread thread;
 
-    private H264Stream mH264Stream;
+    public H264Stream mH264Stream;
 
     private SurfaceView mSurfaceView;
 
